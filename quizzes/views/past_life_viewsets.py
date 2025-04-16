@@ -80,6 +80,7 @@ class PastLifeResultViewSet(viewsets.ModelViewSet):
             "user": request.user if request.user.is_authenticated else None,
             "created_at": datetime.now(),
         })
+        
         if not serializer.is_valid():
             logger.error(f"Serializer errors: {serializer.errors}")
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

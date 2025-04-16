@@ -1,5 +1,7 @@
 import os
 import environ
+import sys
+import socket
 
 # Django 프로젝트 디렉토리 설정
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -19,7 +21,10 @@ OPENAI_API_KEY = env('OPENAI_API_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG', default=True)  # 기본값은 False
 
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[])
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
+
+FONT_PATH = "/usr/share/fonts/truetype/custom/BagelFatOne-Regular.ttf"
+
 
 # Application definition
 INSTALLED_APPS = [
@@ -48,10 +53,14 @@ LOGGING = {
             'filename': 'debug.log',
             'encoding': 'utf-8',
         },
+        'console': {
+            'class': 'logging.StreamHandler',
+            'stream': sys.stdout,
+        },
     },
     'loggers': {
         'django': {
-            'handlers': ['file'],
+            'handlers': ['file', 'console'],
             'level': 'DEBUG',
             'propagate': True,
         },
@@ -138,10 +147,21 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# test용 
+CORS_ALLOW_ALL_ORIGINS = True 
+CSRF_TRUSTED_ORIGINS = ['https://fun-quizzes-frontend.vercel.app']
+
+BASE_URL = 'https://34.47.71.46:8001'  
+
+# BASE_URL = 'http://localhost:8001'
+
+
+
 # CORS settings
 CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS', default=[
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "https://fun-quizzes-frontend.vercel.app",
 ])
 
 # REST Framework settings

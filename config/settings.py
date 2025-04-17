@@ -25,6 +25,10 @@ ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
 
 FONT_PATH = "/usr/share/fonts/truetype/custom/BagelFatOne-Regular.ttf"
 
+SECURE_SSL_REDIRECT = False  # Nginx가 처리하므로 Django는 리디렉션 하지 않음
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 
 # Application definition
 INSTALLED_APPS = [
@@ -151,8 +155,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOW_ALL_ORIGINS = True 
 CSRF_TRUSTED_ORIGINS = ['https://fun-quizzes-frontend.vercel.app']
 
-BASE_URL = 'https://34.47.71.46:8001'  
-
+BASE_URL = 'https://api.go4it.site'  
+# BASE_URL = 'https://34.47.71.46:8001'  
 # BASE_URL = 'http://localhost:8001'
 
 
